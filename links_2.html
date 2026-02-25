@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daniel A. Wills – Links</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --orange: #FF4D00;
+      --yellow: #FFD600;
+      --teal: #00E5C3;
+      --white: #F5F2EB;
+      --gray: #666;
+      --surface: #161616;
+      --border: rgba(255,255,255,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 60px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,77,0,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* CARD CONTAINER */
+    .card {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* AVATAR / MONOGRAM */
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--yellow));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--bg);
+      margin-bottom: 20px;
+      box-shadow: 0 0 0 3px rgba(255,77,0,0.2), 0 0 40px rgba(255,77,0,0.15);
+      animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      animation: fadeUp 0.5s ease forwards 0.1s;
+      opacity: 0;
+    }
+
+    .role {
+      color: var(--teal);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 6px;
+      font-weight: 400;
+      animation: fadeUp 0.5s ease forwards 0.2s;
+      opacity: 0;
+    }
+
+    .bio {
+      color: var(--gray);
+      font-size: 0.9rem;
+      text-align: center;
+      line-height: 1.6;
+      margin-top: 12px;
+      max-width: 300px;
+      animation: fadeUp 0.5s ease forwards 0.3s;
+      opacity: 0;
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--orange), transparent);
+      margin: 28px 0;
+      animation: fadeUp 0.5s ease forwards 0.35s;
+      opacity: 0;
+    }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 12px;
+      align-self: flex-start;
+      padding-left: 2px;
+      width: 100%;
+      opacity: 0;
+    }
+
+    /* LINK BUTTONS */
+    .links-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 18px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 400;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+    }
+
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--orange);
+      transform: scaleY(0);
+      transition: transform 0.2s;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .link-btn:hover::before { transform: scaleY(1); }
+
+    .link-btn:hover {
+      transform: translateX(4px);
+      border-color: rgba(255,77,0,0.3);
+      background: rgba(255,77,0,0.05);
+    }
+
+    .link-btn.yellow:hover { border-color: rgba(255,214,0,0.3); background: rgba(255,214,0,0.05); }
+    .link-btn.yellow::before { background: var(--yellow); }
+
+    .link-btn.teal:hover { border-color: rgba(0,229,195,0.3); background: rgba(0,229,195,0.05); }
+    .link-btn.teal::before { background: var(--teal); }
+
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .link-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .link-icon.orange-bg { background: rgba(255,77,0,0.15); }
+    .link-icon.yellow-bg { background: rgba(255,214,0,0.12); }
+    .link-icon.teal-bg   { background: rgba(0,229,195,0.12); }
+    .link-icon.blue-bg   { background: rgba(10,102,194,0.2); }
+
+    .link-text {}
+    .link-name {
+      display: block;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .link-sub {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--gray);
+      margin-top: 1px;
+    }
+
+    .arrow {
+      color: var(--gray);
+      font-size: 0.9rem;
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .link-btn:hover .arrow {
+      transform: translateX(4px);
+      color: var(--white);
+    }
+
+    /* FOOTER */
+    .page-footer {
+      margin-top: 48px;
+      color: var(--gray);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 1.2s;
+    }
+
+    .page-footer a {
+      color: var(--orange);
+      text-decoration: none;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.7); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* Staggered link reveals */
+    .link-btn:nth-child(1) { animation: fadeUp 0.4s ease forwards 0.4s; }
+    .link-btn:nth-child(2) { animation: fadeUp 0.4s ease forwards 0.5s; }
+    .link-btn:nth-child(3) { animation: fadeUp 0.4s ease forwards 0.6s; }
+    .link-btn:nth-child(4) { animation: fadeUp 0.4s ease forwards 0.7s; }
+    .link-btn:nth-child(5) { animation: fadeUp 0.4s ease forwards 0.8s; }
+    .link-btn:nth-child(6) { animation: fadeUp 0.4s ease forwards 0.9s; }
+
+    .section-label:nth-of-type(1) { animation: fadeUp 0.4s ease forwards 0.38s; }
+    .section-label:nth-of-type(2) { animation: fadeUp 0.4s ease forwards 0.65s; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="avatar">DW</div>
+    <div class="name">Daniel A. Wills</div>
+    <div class="role">Acquisition Manager · Sales Leader</div>
+    <p class="bio">Real estate acquisitions, sales strategy, and relationship building. University of Arkansas student open to new opportunities.</p>
+
+    <div class="divider"></div>
+
+    <div class="section-label">Connect With Me</div>
+    <div class="links-group">
+
+      <a href="https://www.linkedin.com/in/daniel-wills-a20382251" target="_blank" class="link-btn">
+        <div class="link-left">
+          <div class="link-icon blue-bg">💼</div>
+          <div class="link-text">
+            <span class="link-name">LinkedIn</span>
+            <span class="link-sub">Professional profile & network</span>
+          </div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="mailto:dawills@uark.edu" class="link-btn yellow">
+        <div class="link-left">
+          <div class="link-icon yellow-bg">✉️</div>
+          <div class="link-text">
+            <span class="link-name">Email Me</span>
+            <span class="link-sub">dawills@uark.edu</span>
+          </div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+    </div>
+
+    <div class="divider" style="margin-top: 24px;"></div>
+
+    <div class="section-label">My Work</div>
+    <div class="links-group">
+
+      <a href="index.html" class="link-btn teal">
+        <div class="link-left">
+          <div class="link-icon teal-bg">🗂️</div>
+          <div class="link-text">
+            <span class="link-name">Portfolio Website</span>
+            <span class="link-sub">Full experience & background</span>
+          </div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="#" class="link-btn">
+        <div class="link-left">
+          <div class="link-icon orange-bg">🏠</div>
+          <div class="link-text">
+            <span class="link-name">JCA Freedom Homes</span>
+            <span class="link-sub">Current company</span>
+          </div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+    </div>
+
+    <div class="page-footer">
+      <span>Daniel A. Wills · 2025</span>
+      <a href="index.html">← Back to Portfolio</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
